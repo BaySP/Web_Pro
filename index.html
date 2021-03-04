@@ -139,13 +139,15 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">New List</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="statustodoList = ! statustodoList">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </header>
         <section class="modal-card-body">
           <input class="input" type="text" placeholder="My Todo list" v-model="text_todo" />
         </section>
         <footer class="modal-card-foot">
           <button class="button is-success" @click="savenewtodolist()">Save</button>
-          <button class="button" @click="statustodoList = !statustodoList">Cancel</button>
         </footer>
       </div>
     </div>
@@ -155,13 +157,16 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Edit List</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="status_edittodoList = ! status_edittodoList">
+            <span aria-hidden="true">&times;</span>
+          </button>  
         </header>
         <section class="modal-card-body">
           <input class="input" type="text" placeholder="My Todo list" v-model="text_todo" />
         </section>
         <footer class="modal-card-foot">
           <button class="button is-success" @click="edittodolist()">Save</button>
-          <button class="button" @click="status_edittodoList = !status_edittodoList">Cancel</button>
+
         </footer>
       </div>
     </div>
