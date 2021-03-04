@@ -260,11 +260,14 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Edit task</p>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="status_edittask = ! status_edittask">
+            <span aria-hidden="true">&times;</span>
+          </button> 
         </header>
         <section class="modal-card-body">
           <span class="columns">
             <span class="column is-8">
-
+              
               <input class="input" type="text" placeholder="task" v-model="task_name_edit" />
 
             </span>
@@ -298,13 +301,13 @@
               <span class="icon is-small fa-2x ml-5 mt-4" @click="color_button_edit('green')">
                 <i class="fas fa-circle" :class="{'fas fa-check-circle' : status_green_edit}" style="color: green;"></i>
               </span>
+              <span class="ml-6 mt-1">
+                <button class="button is-success" @click="edittask()">Save</button>
+              </span>
             </span>
           </span>
         </section>
-        <footer class="modal-card-foot">
-          <button class="button is-success" @click="edittask()">Save</button>
-          <button class="button" @click="status_edittask = !status_edittask">Cancel</button>
-        </footer>
+        
       </div>
     </div>
 
