@@ -395,8 +395,8 @@
           this.tasks = this.tasks.filter(x => this.todoLists[this.indextodolist].id != x.listId)
           this.other = this.other.filter(x => this.todoLists[this.indextodolist].id != x.listId)
           this.todoLists.splice(this.indextodolist, 1)
+          this.select_id = "--Select list--" 
           this.status_deletetodoList = !this.status_deletetodoList
-
         },
         savetask() {
           this.task_id += 1
