@@ -396,6 +396,7 @@
           this.other = this.other.filter(x => this.todoLists[this.indextodolist].id != x.listId)
           this.todoLists.splice(this.indextodolist, 1)
           this.select_id = "--Select list--" 
+          this.select_id_edit = "--Select list--" 
           this.status_deletetodoList = !this.status_deletetodoList
         },
         savetask() {
