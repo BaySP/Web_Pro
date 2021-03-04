@@ -139,7 +139,8 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">New List</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="statustodoList = ! statustodoList">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            @click="statustodoList = ! statustodoList">
             <span aria-hidden="true">&times;</span>
           </button>
         </header>
@@ -157,9 +158,10 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Edit List</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="status_edittodoList = ! status_edittodoList">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            @click="status_edittodoList = ! status_edittodoList">
             <span aria-hidden="true">&times;</span>
-          </button>  
+          </button>
         </header>
         <section class="modal-card-body">
           <input class="input" type="text" placeholder="My Todo list" v-model="text_todo" />
@@ -260,14 +262,15 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Edit task</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="status_edittask = ! status_edittask">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            @click="exit_edit()">
             <span aria-hidden="true">&times;</span>
-          </button> 
+          </button>
         </header>
         <section class="modal-card-body">
           <span class="columns">
             <span class="column is-8">
-              
+
               <input class="input" type="text" placeholder="task" v-model="task_name_edit" />
 
             </span>
@@ -307,7 +310,7 @@
             </span>
           </span>
         </section>
-        
+
       </div>
     </div>
 
@@ -323,6 +326,7 @@
         text_todo: '',
         tasks: [],
         other: [],
+        other2: [],
         todoList_id: 0,
         task_id: 0,
         indextodolist: 0,
@@ -332,6 +336,7 @@
         task_name_edit: '',
         flag_button: false,
         color: 'black',
+        color_edit: 'black',
         isComplete: false,
         status_black: true,
         status_red: false,
@@ -353,6 +358,7 @@
         sort: '',
         status_deletetask: false,
         indexdelete: 0,
+        colorfrom: true,
       },
       methods: {
         savenewtodolist() {
@@ -398,8 +404,8 @@
           this.tasks = this.tasks.filter(x => this.todoLists[this.indextodolist].id != x.listId)
           this.other = this.other.filter(x => this.todoLists[this.indextodolist].id != x.listId)
           this.todoLists.splice(this.indextodolist, 1)
-          this.select_id = "--Select list--" 
-          this.select_id_edit = "--Select list--" 
+          this.select_id = "--Select list--"
+          this.select_id_edit = "--Select list--"
           this.status_deletetodoList = !this.status_deletetodoList
         },
         savetask() {
@@ -411,6 +417,7 @@
           var date = this.date_time
           var flag = this.flag_button
           var color = this.color
+          var color2 = this.color_edit
           var listId = this.select_id
           if (this.select_id == "--Select list--") {
             alert("กรูณาเลือก list")
@@ -435,6 +442,12 @@
             listId: listId
           }
 
+          var other2 = {
+            id: id,
+            color: color2,
+            listId: listId
+          }
+
           this.other.push(other)
           this.tasks.push(tasks)
           this.task_name = ''
@@ -444,7 +457,7 @@
           this.indexdelete = index
           this.status_deletetask = !this.status_deletetask
         },
-        delete_task(){
+        delete_task() {
           this.tasks.splice(this.indexdelete, 1)
           this.other.splice(this.indexdelete, 1)
           this.status_deletetask = !this.status_deletetask
@@ -467,6 +480,7 @@
           }
           this.key_color += 1
           this.color = color
+          
         },
         color_button_edit(color) {
           if (color == 'black') {
@@ -485,19 +499,36 @@
             this.status_green_edit = true
           }
           this.key_color += 1
-          this.color = color
+          this.color_edit = color
+          
         },
         text_color(info) {
-          for (var i of this.other) {
-            if (i.id == info.id) {
-              return {
-                'color': i.color
+          if (this.colorfrom == true) {
+            for (var i of this.other) {
+              if (i.id == info.id) {
+                return {
+                  'color': i.color
+                }
+              }
+            }
+          }
+          if (this.colorfrom == false) {
+            for (var i of this.other2) {
+              if (i.id == info.id) {
+                return {
+                  'color': i.color2
+                }
               }
             }
           }
         },
+        exit_edit(){
+          this.status_edittask = ! this.status_edittask
+          this.colorfrom = true
+        },
         saveedittask(index) {
           this.indextask = index
+          this.colorfrom = false
           this.task_name_edit = this.tasks[index].name
           this.status_edittask = !this.status_edittask
         },
@@ -510,17 +541,19 @@
           if (this.task_name_edit == "") {
             this.tasks[this.indextask].name = keep_old
             alert("กรุณาใส่ชื่อ task")
-            return
           }
-          this.task_name_edit = ""
-          this.status_edittask = !this.status_edittask
-          this.other[this.indextask].color = this.color
-          this.tasks[this.indextask].listId = this.select_id_edit
-          if (this.select_id_edit == "--Select list--") {
+          else if (this.select_id_edit == "--Select list--") {
             this.tasks[this.indextask].listId = keep_old_id
             alert("กรูณาเลือก list")
-            return
           }
+          else {
+            this.task_name_edit = ""
+            this.status_edittask = !this.status_edittask
+            this.other[this.indextask].color = this.color_edit
+            this.tasks[this.indextask].listId = this.select_id_edit
+            this.colorfrom = true
+          }
+          
         },
         // (todoLists.hide_task == false ||  info.isComplete == false ) && (todoLists.show_task == false || this.other[index].flag == true )
         filter_sort(info, todoLists) {
@@ -593,7 +626,7 @@
             this.tasks = this.tasks.filter(x => this.todoLists[index].id == x.listId)
 
             var tasks_date = this.tasks.filter(x => x.date == '')
-            this.tasks = this.tasks.filter(x=> x.date != '')
+            this.tasks = this.tasks.filter(x => x.date != '')
 
             this.tasks = this.tasks.sort(function (a, b) {
               if (a.date < b.date) {
@@ -604,7 +637,7 @@
               }
               return 0
             })
-            for (var i of tasks_date){
+            for (var i of tasks_date) {
               this.tasks.push(i)
             }
             for (var i of tasks_left) {
