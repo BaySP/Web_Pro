@@ -262,8 +262,7 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Edit task</p>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-            @click="exit_edit()">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="exit_edit()">
             <span aria-hidden="true">&times;</span>
           </button>
         </header>
@@ -480,7 +479,7 @@
           }
           this.key_color += 1
           this.color = color
-          
+
         },
         color_button_edit(color) {
           if (color == 'black') {
@@ -500,7 +499,7 @@
           }
           this.key_color += 1
           this.color_edit = color
-          
+
         },
         text_color(info) {
           if (this.colorfrom == true) {
@@ -522,8 +521,8 @@
             }
           }
         },
-        exit_edit(){
-          this.status_edittask = ! this.status_edittask
+        exit_edit() {
+          this.status_edittask = !this.status_edittask
           this.colorfrom = true
         },
         saveedittask(index) {
@@ -535,9 +534,6 @@
         edittask() {
           var keep_old = this.tasks[this.indextask].name
           var keep_old_id = this.tasks[this.indextask].listId
-          this.tasks[this.indextask].name = this.task_name_edit
-          this.tasks[this.indextask].date = this.date_edit
-          this.tasks[this.indextask].flag = this.flag_edit
           if (this.task_name_edit == "") {
             this.tasks[this.indextask].name = keep_old
             alert("กรุณาใส่ชื่อ task")
@@ -547,13 +543,17 @@
             alert("กรูณาเลือก list")
           }
           else {
-            this.task_name_edit = ""
             this.status_edittask = !this.status_edittask
+            this.tasks[this.indextask].name = this.task_name_edit
+            this.tasks[this.indextask].date = this.date_edit
+            this.tasks[this.indextask].flag = this.flag_edit
             this.other[this.indextask].color = this.color_edit
             this.tasks[this.indextask].listId = this.select_id_edit
+            this.task_name_edit = ""
+            this.date_edit = ""
             this.colorfrom = true
           }
-          
+
         },
         // (todoLists.hide_task == false ||  info.isComplete == false ) && (todoLists.show_task == false || this.other[index].flag == true )
         filter_sort(info, todoLists) {
